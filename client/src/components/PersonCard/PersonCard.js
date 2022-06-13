@@ -23,7 +23,7 @@ export default function PersonCard() {
           <CardMedia
             component="img"
             height="260"
-            image="/profilepic.svg"
+            image="/profile.png"
             alt="green iguana"
           />
           <CardContent>

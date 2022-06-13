@@ -5,6 +5,7 @@ import Auth from "./components/Auth/Auth";
 import Navbar from "./components/Navbar/Navbar";
 import BatchPage from "./components/BatchPage/BatchPage";
 import Dashboard from "./components/Dashboard/Dashboard";
+import Footer from "./components/Footer/Footer";
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
         <Route path="/batch/:id" element={<BatchPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
