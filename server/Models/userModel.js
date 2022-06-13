@@ -27,6 +27,18 @@ const Schema = new mongoose.Schema({
     type: String,
     required: [true, "Batch Required"],
   },
+  quote: {
+    type: String,
+  },
+  selectedFile: {
+    type: String,
+  },
+  insta: {
+    type: String,
+  },
+  linkedIn: {
+    type: String,
+  },
 });
 
 const UserModel = mongoose.model("User", Schema, "Users");

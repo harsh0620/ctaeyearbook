@@ -15,23 +15,18 @@ const cardData = {
   linkedinLink: "https://linkedin.com",
   emailLink: "https://email.com",
 };
-export default function PersonCard() {
+export default function PersonCard({ user }) {
   return (
     <Grid item xs={12} sm={4} md={4}>
       <Card sx={{ maxWidth: 345, margin: 3 }}>
         <CardActionArea>
-          <CardMedia
-            component="img"
-            height="260"
-            image="/profilepic.svg"
-            alt="green iguana"
-          />
+          <CardMedia component="img" image={user?.selectedFile || "/profile.png"} height="260" alt="green iguana" />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {cardData.name}
+              {user?.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {cardData.quote}
+              {user?.quote}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -43,13 +38,13 @@ export default function PersonCard() {
             alignItems: "center",
           }}
         >
-          <Button size="small" color="primary" href={cardData.instaLink}>
+          <Button size="small" color="primary" href={user?.insta}>
             <InstagramIcon />
           </Button>
-          <Button size="small" color="primary" href={cardData.linkedinLink}>
+          <Button size="small" color="primary" href={user?.linkedIn}>
             <LinkedInIcon />
           </Button>
-          <Button size="small" color="primary" href={cardData.emailLink}>
+          <Button size="small" color="primary" href={user?.email}>
             <EmailIcon />
           </Button>
         </CardActions>

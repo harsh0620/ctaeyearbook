@@ -16,6 +16,7 @@ export const AuthHandler = ({ children, history }) => {
     const loginCredential = { email, password };
     try {
       const res = await axios.post("/user/login", loginCredential);
+      console.log(res);
       localStorage.setItem("User_data", JSON.stringify(res.data.data?.user));
       setisLoggedIn(true);
       setUser(res.data.data?.user);
@@ -32,6 +33,7 @@ export const AuthHandler = ({ children, history }) => {
   const signUp = async (data) => {
     try {
       const res = await axios.post("/user/signup", data);
+      console.log(res);
       localStorage.setItem("User_data", JSON.stringify(res.data.data?.user));
       setisLoggedIn(true);
       setUser(res.data.data?.user);
@@ -39,11 +41,21 @@ export const AuthHandler = ({ children, history }) => {
       console.log(err.toString());
     }
   };
+
+  const update = async (data) => {
+    console.log(data);
+    try {
+      const res = await axios.post("/user/update", { ...data, id: user._id });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const user = localStorage.getItem("User_data");
+    const user = JSON.parse(localStorage.getItem("User_data"));
     if (user) {
       setisLoggedIn(true);
-      setUser(JSON.parse(user));
+      setUser(user);
     }
   }, []);
   const value = {
@@ -52,6 +64,7 @@ export const AuthHandler = ({ children, history }) => {
     login,
     logout,
     signUp,
+    update,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

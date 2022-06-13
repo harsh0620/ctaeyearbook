@@ -28,8 +28,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Auth() {
-  const [isSignUp, setIsSignup] = useState(true);
+const Auth = ({ signUp: isSignUp, setSignUp: setIsSignup }) => {
   const { login, signUp } = useAuth();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -142,4 +141,5 @@ export default function Auth() {
       </Container>
     </ThemeProvider>
   );
-}
+};
+export default Auth;

@@ -3,17 +3,17 @@ import React, { useState } from "react";
 import Auth from "../Auth/Auth";
 import { useAuth } from "../Context/authContext";
 import Hero from "../Hero/Hero";
-const Home = () => {
+const Home = ({ signUp, setSignUp }) => {
   const { isLoggedIn, logout } = useAuth();
   console.log(isLoggedIn);
   const [batches, setBatches] = useState([
-    { label: "2018-2022", link: "/batch/2022" },
-    { label: "2019-2023", link: "/batch/2023" },
+    { label: "2018-2022", link: "/batch/2018-2022" },
+    { label: "2019-2023", link: "/batch/2019-2023" },
   ]);
   return (
     <>
       {isLoggedIn ? (
-        <div>
+        <div style={{ width: "100%" }}>
           <Hero title={"CTAE YEARBOOK"} subTitle={"Relive your memories from your college"} />
           <Container
             maxWidth="lg"
@@ -59,7 +59,7 @@ const Home = () => {
           </Container>
         </div>
       ) : (
-        <Auth />
+        <Auth signUp={signUp} setSignUp={setSignUp} />
       )}
     </>
   );

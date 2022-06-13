@@ -1,0 +1,29 @@
+.profilePic {
+  max-width: 150px;
+  height: auto;
+  width: auto\4;
+  border: solid black;
+  margin-bottom: 5px;
+}
+.BasicDetailsContentName {
+  height: auto;
+  width: 100%;
+}
+.skills-card {
+  background-color: #303030;
+  color: #f8f8f8;
+  display: flex;
+  flex-direction: row;
+  width: inherit;
+  height: auto;
+  border-radius: 2px;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+.skills-card-text {
+  display: flex;
+  flex-direction: row;
+  font-size: small;
+  height: auto;
+  width: 20px;
+}

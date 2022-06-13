@@ -5,7 +5,6 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -20,11 +19,13 @@ const settings = [
   { title: "Logout", link: "/logout" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ signUp, setSignUp }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [user, setUser] = React.useState(false);
+  const { isLoggedIn: user } = useAuth();
+  console.log(signUp);
   const { logout } = useAuth();
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -39,7 +40,6 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const navigate = useNavigate();
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -48,8 +48,8 @@ const Navbar = () => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            // component="a"
+            onClick={() => navigate("/")}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -125,7 +125,7 @@ const Navbar = () => {
               </Button>
             ))}
           </Box>
-          {user === false ? (
+          {user === true ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -149,14 +149,17 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem onClick={setting.title === "Logout" ? logout : null} key={setting.title}>
+                  <MenuItem
+                    onClick={setting.title === "Logout" ? logout : () => navigate("/dashboard")}
+                    key={setting.title}
+                  >
                     <Typography textAlign="center">{setting.title}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
           ) : (
-            <Button href="/auth" variant="contained" color="primary">
+            <Button onClick={() => setSignUp(!signUp)} variant="contained" color="primary">
               SignIn
             </Button>
           )}
