@@ -10,15 +10,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { login } from "../Context/authContext";
+import { useAuth } from "../Context/authContext";
 
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="https://www.ctae.ac.in/">
         CTAE YearBook
@@ -33,7 +30,7 @@ const theme = createTheme();
 
 export default function Auth() {
   const [isSignUp, setIsSignup] = useState(true);
-
+  const { login, signUp } = useAuth();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -41,6 +38,14 @@ export default function Auth() {
       email: data.get("email"),
       password: data.get("password"),
     });
+    const form_data = {
+      name: data.get("name"),
+      email: data.get("email"),
+      password: data.get("password"),
+      branch: data.get("branch"),
+      batch: data.get("batch"),
+    };
+    isSignUp ? signUp(form_data) : login(data.get("email"), data.get("password"));
   };
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
@@ -63,12 +68,7 @@ export default function Auth() {
           <Typography component="h1" variant="h5">
             {isSignUp ? "Sign Up" : "Sign In"}
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               {isSignUp && (
                 <Grid item xs={12}>
@@ -85,14 +85,7 @@ export default function Auth() {
               )}
 
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
+                <TextField required fullWidth id="email" label="Email Address" name="email" autoComplete="email" />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -133,20 +126,13 @@ export default function Auth() {
                 </Grid>
               )}
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               {isSignUp ? "Sign Up" : "Sign In"}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Button onClick={switchMode}>
-                  {isSignUp
-                    ? "Already have an account? Sign in"
-                    : "Don't have an account? Sign Up"}
+                  {isSignUp ? "Already have an account? Sign in" : "Don't have an account? Sign Up"}
                 </Button>
               </Grid>
             </Grid>
