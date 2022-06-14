@@ -44,7 +44,7 @@ exports.signUp = async (req, res, next) => {
       status: "Success",
       message: "Registeration Successfull",
       data: {
-        user: user[0],
+        user: user,
       },
     });
   } catch (err) {

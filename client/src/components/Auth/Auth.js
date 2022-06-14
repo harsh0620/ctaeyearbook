@@ -33,10 +33,7 @@ const Auth = ({ signUp: isSignUp, setSignUp: setIsSignup }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
     const form_data = {
       name: data.get("name"),
       email: data.get("email"),
@@ -44,6 +41,17 @@ const Auth = ({ signUp: isSignUp, setSignUp: setIsSignup }) => {
       branch: data.get("branch"),
       batch: data.get("batch"),
     };
+    if (
+      form_data.name == null ||
+      form_data.email == null ||
+      form_data.password == null ||
+      form_data.branch == null ||
+      form_data.batch == null
+    ) {
+      alert("Please fill the form correctly");
+    } else if (form_data.password.length != 8) {
+      alert("Make sure your password is greater or equal to length 8");
+    }
     isSignUp ? signUp(form_data) : login(data.get("email"), data.get("password"));
   };
   const switchMode = () => {

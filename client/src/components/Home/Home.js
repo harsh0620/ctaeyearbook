@@ -5,7 +5,7 @@ import { useAuth } from "../Context/authContext";
 import Hero from "../Hero/Hero";
 const Home = ({ signUp, setSignUp }) => {
   const { isLoggedIn, logout } = useAuth();
-  console.log(isLoggedIn);
+  // console.log(isLoggedIn);
   const [batches, setBatches] = useState([
     { label: "2018-2022", link: "/batch/2018-2022" },
     { label: "2019-2023", link: "/batch/2019-2023" },

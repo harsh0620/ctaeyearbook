@@ -23,7 +23,7 @@ const Navbar = ({ signUp, setSignUp }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { isLoggedIn: user } = useAuth();
-  console.log(signUp);
+  
   const { logout } = useAuth();
   const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
@@ -104,7 +104,7 @@ const Navbar = ({ signUp, setSignUp }) => {
             variant="h6"
             noWrap
             component="a"
-            href=""
+            onClick={() => navigate("/")}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },

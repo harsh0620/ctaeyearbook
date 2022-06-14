@@ -3,14 +3,22 @@ import Update from "./Update";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Avatar, CardActionArea, Container, Grid } from "@mui/material";
+import { Alert, Avatar, CardActionArea, Container, Grid, Slide } from "@mui/material";
 import Upload from "../Upload/Upload";
 import { useState } from "react";
 import { useRef } from "react";
 const Dashboard = () => {
   const [flag, setFlag] = React.useState(1);
+  const [uploading, setUploading] = useState(false);
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      <div style={{ position: "absolute", zIndex: "999", top: "20%", left: "40%" }}>
+        <Slide in={uploading}>
+          <Alert onClose={() => setUploading(false)} security="success">
+            "File Uploaded Successfully"
+          </Alert>
+        </Slide>
+      </div>
       <Container maxWidth="lg">
         <Grid item xs={12} md={6} m={3}>
           <Grid item xs={12} md={6} lg={6} m={2}>
@@ -42,7 +50,11 @@ const Dashboard = () => {
             </Card>
           </Grid>
         </Grid>
-        {flag === 1 ? <Update /> : <Upload />}
+        {flag === 1 ? (
+          <Update uploading={uploading} setUploading={setUploading} />
+        ) : (
+          <Upload uploading={uploading} setUploading={setUploading} />
+        )}
       </Container>
     </div>
   );

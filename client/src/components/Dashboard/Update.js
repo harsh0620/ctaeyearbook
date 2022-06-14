@@ -8,7 +8,7 @@ import FileBase from "react-file-base64";
 import { Avatar, Card, CardActionArea, CardContent } from "@mui/material";
 import { useAuth } from "../Context/authContext";
 import { useState } from "react";
-const Update = () => {
+const Update = ({ setUploading, uploading }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const { update, user } = useAuth();
   const [userInfo, setUserInfo] = useState({
@@ -22,15 +22,17 @@ const Update = () => {
     linkedIn: user?.linkedIn,
     selectedFile: user?.selectedFile,
   });
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(userInfo);
-    update(userInfo);
+    // console.log(userInfo);
+    setUploading(true);
+    await update(userInfo);
+    setUploading(false);
   };
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("User_data"));
-  //   setUserInfo(userInfo);
-  // }, []);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("User_data"));
+    setUserInfo(user);
+  }, []);
   return (
     <Container maxWidth="lg">
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -38,9 +40,10 @@ const Update = () => {
           <Grid item xs={12}>
             <TextField
               onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-              value={user?.name}
+              value={userInfo?.name}
               autoComplete="given-name"
               name="name"
+              disabled="true"
               required
               fullWidth
               id="name"
@@ -52,9 +55,10 @@ const Update = () => {
           <Grid item xs={12}>
             <TextField
               onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
-              value={user?.email}
+              value={userInfo?.email}
               required
               fullWidth
+              disabled="true"
               id="email"
               label="Email Address"
               name="email"
@@ -64,20 +68,21 @@ const Update = () => {
           <Grid item xs={12}>
             <TextField
               onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
-              value={user?.password}
+              value={userInfo?.password}
               required
               fullWidth
               name="password"
               label="Password"
               type="password"
               id="password"
+              disabled="true"
               autoComplete="new-password"
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               onChange={(e) => setUserInfo({ ...userInfo, quote: e.target.value })}
-              value={user?.quote}
+              value={userInfo?.quote}
               required
               fullWidth
               name="quote"
@@ -89,7 +94,7 @@ const Update = () => {
           <Grid item xs={12} md={6}>
             <TextField
               onChange={(e) => setUserInfo({ ...userInfo, branch: e.target.value })}
-              value={user?.branch}
+              value={userInfo?.branch}
               autoComplete="given-branch"
               name="branch"
               required
@@ -103,7 +108,7 @@ const Update = () => {
           <Grid item xs={12} md={6}>
             <TextField
               onChange={(e) => setUserInfo({ ...userInfo, batch: e.target.value })}
-              value={user?.batch}
+              value={userInfo?.batch}
               autoComplete="given-batch"
               name="batch"
               required
@@ -116,7 +121,7 @@ const Update = () => {
           <Grid item xs={12} md={6}>
             <TextField
               onChange={(e) => setUserInfo({ ...userInfo, insta: e.target.value })}
-              value={user?.insta}
+              value={userInfo?.insta}
               autoComplete="given-insta"
               name="insta"
               required
@@ -130,7 +135,7 @@ const Update = () => {
           <Grid item xs={12} md={6}>
             <TextField
               onChange={(e) => setUserInfo({ ...userInfo, linkedIn: e.target.value })}
-              value={user?.linkedIn}
+              value={userInfo?.linkedIn}
               autoComplete="given-linkedin"
               name="linkedin"
               required
