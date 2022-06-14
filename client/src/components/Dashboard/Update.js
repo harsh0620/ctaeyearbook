@@ -1,26 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import FileBase from "react-file-base64";
-import { Card, CardActionArea, CardContent } from "@mui/material";
+import { Avatar, Card, CardActionArea, CardContent } from "@mui/material";
+import { useAuth } from "../Context/authContext";
+import { useState } from "react";
 const Update = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const { update, user } = useAuth();
+  const [userInfo, setUserInfo] = useState({
+    name: user?.name,
+    email: user?.email,
+    password: user?.password,
+    branch: user?.branch,
+    batch: user?.batch,
+    quote: user?.quote,
+    insta: user?.insta,
+    linkedIn: user?.linkedIn,
+    selectedFile: user?.selectedFile,
+  });
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    console.log(userInfo);
+    update(userInfo);
   };
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("User_data"));
+  //   setUserInfo(userInfo);
+  // }, []);
   return (
     <Container maxWidth="lg">
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
+              onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+              value={user?.name}
               autoComplete="given-name"
               name="name"
               required
@@ -33,6 +51,8 @@ const Update = () => {
 
           <Grid item xs={12}>
             <TextField
+              onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+              value={user?.email}
               required
               fullWidth
               id="email"
@@ -43,6 +63,8 @@ const Update = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
+              value={user?.password}
               required
               fullWidth
               name="password"
@@ -54,6 +76,8 @@ const Update = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              onChange={(e) => setUserInfo({ ...userInfo, quote: e.target.value })}
+              value={user?.quote}
               required
               fullWidth
               name="quote"
@@ -64,6 +88,8 @@ const Update = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              onChange={(e) => setUserInfo({ ...userInfo, branch: e.target.value })}
+              value={user?.branch}
               autoComplete="given-branch"
               name="branch"
               required
@@ -76,6 +102,8 @@ const Update = () => {
 
           <Grid item xs={12} md={6}>
             <TextField
+              onChange={(e) => setUserInfo({ ...userInfo, batch: e.target.value })}
+              value={user?.batch}
               autoComplete="given-batch"
               name="batch"
               required
@@ -87,6 +115,8 @@ const Update = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              onChange={(e) => setUserInfo({ ...userInfo, insta: e.target.value })}
+              value={user?.insta}
               autoComplete="given-insta"
               name="insta"
               required
@@ -99,6 +129,8 @@ const Update = () => {
 
           <Grid item xs={12} md={6}>
             <TextField
+              onChange={(e) => setUserInfo({ ...userInfo, linkedIn: e.target.value })}
+              value={user?.linkedIn}
               autoComplete="given-linkedin"
               name="linkedin"
               required
@@ -115,19 +147,20 @@ const Update = () => {
                   <FileBase
                     type="file"
                     multiple={false}
-                    // onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })}
+                    onDone={({ base64 }) => setUserInfo({ ...userInfo, selectedFile: base64 })}
                   />
                 </CardContent>
               </CardActionArea>
+              <Avatar
+                variant="square"
+                style={{ height: "200px", width: "200px", margin: "auto" }}
+                className="profile_avatar"
+                src={userInfo.selectedFile}
+              />
             </Card>
           </Grid>
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           Update
         </Button>
       </Box>

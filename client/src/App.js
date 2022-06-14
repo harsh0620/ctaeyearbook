@@ -6,17 +6,23 @@ import Navbar from "./components/Navbar/Navbar";
 import BatchPage from "./components/BatchPage/BatchPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer/Footer";
+import { AuthHandler } from "./components/Context/authContext";
+import { useState } from "react";
 function App() {
+  const [signUp, setSignUp] = useState(true);
+  console.log(signUp);
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/batch/:id" element={<BatchPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-      <Footer />
+      <AuthHandler>
+        <Navbar signUp={signUp} setSignUp={setSignUp} />
+        <Routes>
+          <Route path="/" exact element={<Home signUp={signUp} setSignUp={setSignUp} />} />
+          <Route path="/auth" element={<Auth signUp={signUp} setSignUp={setSignUp} />} />
+          <Route path="/batch/:id" element={<BatchPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+        <Footer />
+      </AuthHandler>
     </BrowserRouter>
   );
 }

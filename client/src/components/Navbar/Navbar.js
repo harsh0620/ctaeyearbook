@@ -12,16 +12,20 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/authContext";
 const pages = [];
 const settings = [
   { title: "Dashboard", link: "/dashboard" },
   { title: "Logout", link: "/logout" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ signUp, setSignUp }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [user, setUser] = React.useState(false);
+  const { isLoggedIn: user } = useAuth();
+  console.log(signUp);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -36,19 +40,16 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const navigate = useNavigate();
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <LibraryBooksIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+          <LibraryBooksIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            // component="a"
+            onClick={() => navigate("/")}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -98,9 +99,7 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box> */}
-          <LibraryBooksIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
+          <LibraryBooksIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -121,16 +120,12 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
+              <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
                 {page}
               </Button>
             ))}
           </Box>
-          {user === false ? (
+          {user === true ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -154,14 +149,17 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting}>
+                  <MenuItem
+                    onClick={setting.title === "Logout" ? logout : () => navigate("/dashboard")}
+                    key={setting.title}
+                  >
                     <Typography textAlign="center">{setting.title}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
           ) : (
-            <Button href="/auth" variant="contained" color="primary">
+            <Button onClick={() => setSignUp(!signUp)} variant="contained" color="primary">
               SignIn
             </Button>
           )}

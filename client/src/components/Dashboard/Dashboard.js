@@ -3,8 +3,10 @@ import Update from "./Update";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, Container, Grid } from "@mui/material";
+import { Avatar, CardActionArea, Container, Grid } from "@mui/material";
 import Upload from "../Upload/Upload";
+import { useState } from "react";
+import { useRef } from "react";
 const Dashboard = () => {
   const [flag, setFlag] = React.useState(1);
   return (
@@ -14,11 +16,7 @@ const Dashboard = () => {
           <Grid item xs={12} md={6} lg={6} m={2}>
             <Card
               onClick={() => setFlag(1)}
-              sx={
-                flag === 1
-                  ? { background: "#1976d2", color: "white" }
-                  : { color: "#1976d2", background: "white" }
-              }
+              sx={flag === 1 ? { background: "#1976d2", color: "white" } : { color: "#1976d2", background: "white" }}
             >
               <CardActionArea>
                 <CardContent>
@@ -32,11 +30,7 @@ const Dashboard = () => {
           <Grid item xs={12} md={6} lg={6} m={2}>
             <Card
               onClick={() => setFlag(2)}
-              sx={
-                flag === 2
-                  ? { background: "#1976d2", color: "white" }
-                  : { color: "#1976d2", background: "white" }
-              }
+              sx={flag === 2 ? { background: "#1976d2", color: "white" } : { color: "#1976d2", background: "white" }}
             >
               <CardActionArea>
                 <CardContent>
@@ -48,7 +42,6 @@ const Dashboard = () => {
             </Card>
           </Grid>
         </Grid>
-
         {flag === 1 ? <Update /> : <Upload />}
       </Container>
     </div>
