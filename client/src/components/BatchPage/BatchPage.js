@@ -8,7 +8,7 @@ import { CardActionArea, Container, Grid } from "@mui/material";
 import Gallery from "../Gallery/Gallery";
 import axios from "axios";
 import { useAuth } from "../Context/authContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const BatchPage = () => {
   const [flag, setFlag] = React.useState(1);
@@ -25,37 +25,41 @@ const BatchPage = () => {
     const fetchPics = async () => {
       try {
         const res = await axios.get(`/user/batch_pics/${batch}`);
-        console.log(res);
+        // console.log(res);
         if (res) {
           setBatchPics(res.data?.data?.batchPics);
         }
       } catch (err) {
-        console.log(err);
+        window.alert(err.message);
+        // console.log(err);
       }
     };
     fetchPics();
   }, [user]);
-
+  const params = useParams();
   useEffect(() => {
     if (!user) {
       return;
     }
+
+  
     const fetchUsers = async () => {
       try {
         const res = await axios.get(`/user/getUsers/${batch}`);
         if (res) {
-          console.log(res);
+         
           setUsers(res.data?.data?.users);
         }
       } catch (err) {
-        console.log(err);
+        window.alert(err.message);
+        // console.log(err);
       }
     };
     fetchUsers();
   }, [user]);
   return (
     <div>
-      <Hero title={`Batch 2018-2022`} />
+      <Hero title={`Batch ${params.id}`} />
       <Container maxWidth="lg">
         <Grid item xs={12} md={6} m={3}>
           <Grid item xs={12} md={6} lg={6} m={2}>

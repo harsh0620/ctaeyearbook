@@ -3,14 +3,16 @@ import React, { useState } from "react";
 import FileBase from "react-file-base64";
 import { useAuth } from "../Context/authContext";
 import axios from "axios";
-const Upload = () => {
+const Upload = ({ setUploading }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const { user } = useAuth();
   const uploadHandler = async () => {
     if (!selectedFile) {
       return;
     }
+    setUploading(true);
     const res = await axios.post("/user/upload_batchPic", { selectedFile: selectedFile, batch: user?.batch });
+    setUploading(false);
     console.log(res);
   };
   return (

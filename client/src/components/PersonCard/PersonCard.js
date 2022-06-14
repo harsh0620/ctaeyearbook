@@ -38,10 +38,10 @@ export default function PersonCard({ user }) {
             alignItems: "center",
           }}
         >
-          <Button size="small" color="primary" href={user?.insta}>
+          <Button size="small" color="primary" href={`https://www.instagram.com/${user?.insta}`} target="__blank">
             <InstagramIcon />
           </Button>
-          <Button size="small" color="primary" href={user?.linkedIn}>
+          <Button size="small" color="primary" href={`https://www.linkedin.com/${user?.insta}`} target="__blank">
             <LinkedInIcon />
           </Button>
           <Button size="small" color="primary" href={user?.email}>

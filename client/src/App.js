@@ -10,7 +10,7 @@ import { AuthHandler } from "./components/Context/authContext";
 import { useState } from "react";
 function App() {
   const [signUp, setSignUp] = useState(true);
-  console.log(signUp);
+  // console.log(signUp);
   return (
     <BrowserRouter>
       <AuthHandler>

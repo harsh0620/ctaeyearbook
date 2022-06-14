@@ -11,17 +11,18 @@ export const AuthHandler = ({ children, history }) => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  console.log(user);
+  // console.log(user);
   const login = async (email, password) => {
     const loginCredential = { email, password };
     try {
       const res = await axios.post("/user/login", loginCredential);
-      console.log(res);
+      // console.log(res);
       localStorage.setItem("User_data", JSON.stringify(res.data.data?.user));
       setisLoggedIn(true);
       setUser(res.data.data?.user);
     } catch (err) {
-      console.log(err.response?.message);
+      window.alert(err.message);
+      // console.log(err.response?.message);
     }
   };
   const logout = () => {
@@ -33,22 +34,25 @@ export const AuthHandler = ({ children, history }) => {
   const signUp = async (data) => {
     try {
       const res = await axios.post("/user/signup", data);
-      console.log(res);
+
       localStorage.setItem("User_data", JSON.stringify(res.data.data?.user));
       setisLoggedIn(true);
       setUser(res.data.data?.user);
     } catch (err) {
-      console.log(err.toString());
+      window.alert(err.message);
+      // console.log(err.toString());
     }
   };
 
   const update = async (data) => {
-    console.log(data);
     try {
       const res = await axios.post("/user/update", { ...data, id: user._id });
       console.log(res);
+      localStorage.setItem("User_data", JSON.stringify(res.data.data?.user));
+      setUser(res.data.data?.user);
     } catch (err) {
-      console.log(err);
+      window.alert(err);
+      // console.log(err);
     }
   };
   useEffect(() => {
