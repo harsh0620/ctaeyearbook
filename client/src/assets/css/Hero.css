@@ -1,0 +1,45 @@
+.hero-box{
+    width: 100%;
+    height: 50vh;
+    position: relative;
+    background-color: #1976d2;
+    margin: auto;
+}
+.hero-subbox{
+    margin: 0;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  -ms-transform: translateY(-30%);
+  transform: translateY(-30%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+.hero-title{
+    margin: auto;
+    text-align: center;
+    color: white;
+    font-size: 70px;
+    font-weight: 700;
+}
+.hero-subtitle{
+    margin: auto;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+@media only screen and (max-width: 600px) {
+    .hero-title{
+        margin: auto;
+        text-align: center;
+        color: white;
+        font-size: 30px;
+        font-weight: 700;
+    }
+    .hero-subtitle{
+        margin: auto;
+        text-align: center;
+        color: white;
+        font-size: 20px;
+    }
+}
